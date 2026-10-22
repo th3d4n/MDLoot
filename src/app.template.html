@@ -1,0 +1,416 @@
+<title>Dungeons II Loot Ledger</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one column, search pinned on top, tabs under it, tappable item rows, stats open in a bottom sheet styled like an in-game item tooltip. */
+:root {
+  --bg: #15171c;          /* dungeon stone */
+  --panel: #1e2129;
+  --panel-2: #262a34;
+  --line: #343946;
+  --fg: #eceae4;
+  --muted: #9ea3b0;
+  --accent: #6fd3c3;      /* soul-lantern teal: selection + interaction */
+  --unique: #f2a23a;      /* unique-item orange */
+  --warn: #ff7a6b;        /* source conflict */
+  --warn-bg: #3a2020;
+  --good: #8fd98a;
+  --bad: #ff9a8a;
+  --font-display: 'Pixelify Sans', 'Courier New', monospace;
+  --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  --font-num: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eeece6; --panel: #fbfaf7; --panel-2: #f1efe9; --line: #d7d3c9;
+  --fg: #1d1f25; --muted: #5d616c; --accent: #0f7f71; --unique: #a85a00;
+  --warn: #b3261e; --warn-bg: #fbe3df; --good: #2f7d2b; --bad: #b3261e; color-scheme: light } }
+:root[data-theme="light"] {
+  --bg: #eeece6; --panel: #fbfaf7; --panel-2: #f1efe9; --line: #d7d3c9;
+  --fg: #1d1f25; --muted: #5d616c; --accent: #0f7f71; --unique: #a85a00;
+  --warn: #b3261e; --warn-bg: #fbe3df; --good: #2f7d2b; --bad: #b3261e; color-scheme: light }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.45; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 48px; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 10px; display: grid; gap: 10px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: .01em; margin: 0; line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+h1 small { font-family: var(--font-body); font-weight: 400; font-size: 13px; color: var(--muted); letter-spacing: 0; }
+.search { position: relative; }
+.search input { width: 100%; padding: 14px 44px 14px 14px; border-radius: 10px; border: 2px solid var(--line); background: var(--panel); font-size: 18px; }
+.search input:focus { border-color: var(--accent); outline: none; }
+.search button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border: 0; background: transparent; color: var(--muted); font-size: 22px; border-radius: 8px; cursor: pointer; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.tab { padding: 10px 6px; border-radius: 9px; border: 2px solid var(--line); background: var(--panel); font-family: var(--font-display); font-weight: 500; font-size: 17px; cursor: pointer; }
+.tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); background: var(--panel-2); }
+.tab .n { font-family: var(--font-num); font-size: 12px; color: var(--muted); margin-left: 4px; }
+
+.filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.filters::-webkit-scrollbar { display: none; }
+.chip { flex: none; padding: 7px 12px; border-radius: 999px; border: 1.5px solid var(--line); background: transparent; font-size: 15px; cursor: pointer; white-space: nowrap; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 700; }
+.chip.uq[aria-pressed="true"] { background: var(--unique); border-color: var(--unique); }
+.sortrow { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+.sortrow select { background: var(--panel); border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: 15px; }
+.sortrow .count { margin-left: auto; font-family: var(--font-num); font-size: 13px; }
+
+ul.list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; }
+.row { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; text-align: left; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--panel); cursor: pointer; min-height: 60px; }
+.row:hover { border-color: var(--accent); }
+.row .nm { font-weight: 700; font-size: 17px; min-width: 0; }
+.row.is-unique .nm { color: var(--unique); }
+.row .sub { display: block; font-weight: 400; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.row .stat { text-align: right; font-family: var(--font-num); font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; }
+.row .stat small { display: block; font-family: var(--font-body); font-weight: 400; font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.flag { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; padding: 1px 7px; border-radius: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; vertical-align: 2px; }
+.flag.conf { background: var(--warn-bg); color: var(--warn); }
+.flag.uq { border: 1.5px solid var(--unique); color: var(--unique); }
+.empty { padding: 28px 8px; text-align: center; color: var(--muted); }
+
+/* ---------- bottom sheet: the tooltip ---------- */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 20; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 88%; overflow-y: auto; background: var(--panel); border-top: 3px solid var(--accent); border-radius: 16px 16px 0 0; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); padding-top: 10px; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -10px 40px rgba(0,0,0,.4); }
+.sheet.unique { border-top-color: var(--unique); }
+.sheet-in { max-width: 680px; margin: 0 auto; display: grid; gap: 14px; }
+.grab { width: 44px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 4px; }
+.sheet-head { display: flex; align-items: flex-start; gap: 12px; }
+.sheet-head h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; margin: 0; line-height: 1.1; flex: 1; min-width: 0; text-wrap: balance; }
+.sheet.unique h2 { color: var(--unique); }
+.close { flex: none; width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--panel-2); font-size: 22px; cursor: pointer; }
+.kind { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.effect { padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--unique); color: var(--fg); }
+.effect b { color: var(--unique); display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.st { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.st.wide { grid-column: 1 / -1; }
+.st .k { font-size: 12px; color: var(--muted); letter-spacing: .07em; text-transform: uppercase; }
+.st .v { font-family: var(--font-num); font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.st .v small { font-size: 13px; font-weight: 500; color: var(--muted); }
+.st.conf { background: var(--warn-bg); outline: 1.5px solid var(--warn); }
+.st.conf .k { color: var(--warn); font-weight: 700; }
+.both { display: grid; gap: 2px; margin-top: 2px; }
+.both div { display: flex; justify-content: space-between; gap: 8px; font-family: var(--font-num); font-size: 17px; font-weight: 700; }
+.both span { font-family: var(--font-body); font-weight: 400; font-size: 13px; color: var(--muted); }
+.note { font-size: 14.5px; color: var(--muted); }
+.note.warn { color: var(--fg); background: var(--warn-bg); border-radius: 10px; padding: 10px 12px; }
+h3 { font-family: var(--font-display); font-weight: 500; font-size: 17px; margin: 4px 0 0; color: var(--muted); }
+.diffs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.diffs li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 10px; background: var(--panel-2); border-radius: 8px; font-size: 15px; }
+.diffs .val { font-family: var(--font-num); font-weight: 700; white-space: nowrap; }
+.up { color: var(--good); } .down { color: var(--bad); }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { padding: 4px 10px; border-radius: 7px; background: var(--panel-2); font-size: 15px; }
+.tag b { font-family: var(--font-num); color: var(--accent); }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: inherit; }
+.details { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.details li { padding: 8px 10px; background: var(--panel-2); border-radius: 8px; font-size: 15px; font-variant-numeric: tabular-nums; }
+
+/* ---------- about ---------- */
+.about { margin-top: 28px; padding: 16px; border-radius: 12px; border: 1.5px dashed var(--line); font-size: 15px; color: var(--muted); display: grid; gap: 8px; }
+.about h2 { font-family: var(--font-display); font-size: 19px; color: var(--fg); margin: 0; }
+.about p { margin: 0; max-width: 65ch; }
+.about a { color: var(--accent); }
+.about ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet:not([hidden]) { animation: rise .18s ease-out; }
+  @keyframes rise { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Loot Ledger <small>Minecraft Dungeons II hidden stats</small></h1>
+    <div class="search">
+      <label for="q" class="sr" hidden>Search items</label>
+      <input id="q" type="search" placeholder="Search any item…" autocomplete="off" aria-label="Search any item">
+      <button id="clear" type="button" aria-label="Clear search" hidden>×</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="weapons" id="tab-weapons">Weapons<span class="n"></span></button>
+      <button class="tab" role="tab" data-tab="armor" id="tab-armor">Armor<span class="n"></span></button>
+      <button class="tab" role="tab" data-tab="artifacts" id="tab-artifacts">Artifacts<span class="n"></span></button>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="sortrow" id="sortrow">
+      <label for="sort">Sort</label>
+      <select id="sort"></select>
+      <span class="count" id="count"></span>
+    </div>
+  </header>
+
+  <ul class="list" id="list"></ul>
+
+  <section class="about" id="about">
+    <h2>Where these numbers come from</h2>
+    <p>Two fan projects read the game's own data files. Most numbers match. Where they don't, the item shows a red <span class="flag conf">2 sources</span> tag and both numbers, so you can test it in game.</p>
+    <ul>
+      <li><a href="https://metabot.gg/en/minecraft-dungeons-2/weapons" target="_blank" rel="noopener">MetaBot.gg</a>, game build 1.1.1.0 (data built Oct 5, 2026). Weapons, armor, uniques, artifacts.</li>
+      <li><a href="https://github.com/operator1212/dungeons2-stats-mod" target="_blank" rel="noopener">Dungeons II Stats Mod</a> data file (Oct 2, 2026). Hit-by-hit damage, combo time, jump attack, reload.</li>
+    </ul>
+    <p>These are base numbers. In game, Item Power, enchantments and gear effects all change them. A Mobalytics write-up of the Reddit findings says damage scales with Item Power compared to the area's level, capped at 1.75×.</p>
+    <p>Armor has no hidden defense number. Its weight label and its archetypes decide which effects it can roll. Uniques usually share their base item's stats, but not always; the item page lists every difference.</p>
+    <p>Pulled Oct 22, 2026. A game patch can change any of this.</p>
+  </section>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden></div>
+
+<script>
+const DATA = __DATA__;
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = (n, d = 1) => n == null ? '—' : (Math.round(n * 10 ** d) / 10 ** d).toString();
+
+const store = {
+  get(k, f) { try { const v = localStorage.getItem('ll:' + k); return v == null ? f : JSON.parse(v); } catch { return f; } },
+  set(k, v) { try { localStorage.setItem('ll:' + k, JSON.stringify(v)); } catch {} }
+};
+
+const state = {
+  tab: store.get('tab', 'weapons'),
+  q: '',
+  filter: { weapons: 'all', armor: 'all', artifacts: 'all' },
+  sort: store.get('sort', { weapons: 'dps', armor: 'name', artifacts: 'name' })
+};
+
+const FIELD_LABEL = { combo: 'Combo damage', dps: 'DPS', reach: 'Reach', shot: 'Shot damage', rate: 'Time between shots', ammo: 'Ammo', hits: 'Hits', combo_time: 'Combo time', jump: 'Jump attack', reload: 'Reload' };
+const UNITS = { reach: ' blocks', rate: ' s', combo_time: ' s', reload: ' s' };
+const HIGHER_IS_BETTER = { combo: true, dps: true, reach: true, shot: true, ammo: true, jump: true, rate: false, combo_time: false, reload: false };
+
+const TABS = {
+  weapons: {
+    items: DATA.weapons,
+    filters: [['all', 'All'], ['melee', 'Melee'], ['ranged', 'Ranged'], ['unique', 'Uniques'], ['conf', 'Sources differ']],
+    sorts: [['dps', 'DPS (high first)'], ['combo', 'Damage per combo/shot'], ['reach', 'Reach (melee)'], ['name', 'Name']],
+    match: (w, f) => f === 'all' || (f === 'melee' && w.kind === 'melee') || (f === 'ranged' && w.kind === 'ranged') || (f === 'unique' && w.unique) || (f === 'conf' && w.conflicts.length),
+  },
+  armor: {
+    items: DATA.armor,
+    filters: [['all', 'All'], ['unique', 'Uniques'], ['Helmet', 'Helmet'], ['Chest', 'Chest'], ['Leggings', 'Legs'], ['Boots', 'Boots'],
+      ...Object.keys(DATA.pools).map(a => ['a:' + a, a])],
+    sorts: [['name', 'Name'], ['set', 'Set'], ['weight', 'Weight']],
+    match: (a, f) => f === 'all' || (f === 'unique' && a.unique) || a.slot === f || (f.startsWith('a:') && a.arch.includes(f.slice(2))),
+  },
+  artifacts: {
+    items: DATA.artifacts,
+    filters: [['all', 'All'], ['Fighter', 'Fighter'], ['Mage', 'Mage'], ['Support', 'Support'], ['Summoner', 'Summoner'], ['Tank', 'Tank'], ['Trickster', 'Trickster'], ['quiver', 'Quivers']],
+    sorts: [['name', 'Name'], ['cooldown', 'Cooldown (short first)'], ['soul', 'Soul cost (low first)']],
+    match: (a, f) => f === 'all' || (f === 'quiver' && a.type === 'Quiver') || (a.archetypes || []).includes(f),
+  }
+};
+
+const keyStat = {
+  weapons: (w) => w.kind === 'melee'
+    ? [w.mb.dps, w.mb.dps_est ? '≈ DPS' : 'DPS']
+    : [w.mb.dps, 'burst DPS'],
+  armor: (a) => [null, ''],
+  artifacts: (a) => [a.cooldown_s, 's cooldown'],
+};
+
+function sortItems(tab, list) {
+  const s = state.sort[tab];
+  const by = {
+    name: (a, b) => a.name.localeCompare(b.name),
+    dps: (a, b) => (b.mb.dps ?? -1) - (a.mb.dps ?? -1),
+    combo: (a, b) => ((b.mb.combo ?? b.mb.shot) - (a.mb.combo ?? a.mb.shot)),
+    reach: (a, b) => (b.mb.reach ?? -1) - (a.mb.reach ?? -1),
+    set: (a, b) => a.set.localeCompare(b.set) || a.name.localeCompare(b.name),
+    weight: (a, b) => ['Light', 'Medium', 'Heavy'].indexOf(a.weight) - ['Light', 'Medium', 'Heavy'].indexOf(b.weight) || a.name.localeCompare(b.name),
+    cooldown: (a, b) => a.cooldown_s - b.cooldown_s || a.name.localeCompare(b.name),
+    soul: (a, b) => (a.soul_cost ?? 0) - (b.soul_cost ?? 0) || a.name.localeCompare(b.name),
+  }[s];
+  return [...list].sort((a, b) => by(a, b) || a.name.localeCompare(b.name));
+}
+
+function searchText(tab, it) {
+  if (tab === 'weapons') return [it.name, it.base, it.unique_version, it.weight, it.kind, ...(it.arch || []), it.effect].join(' ');
+  if (tab === 'armor') return [it.name, it.set, it.slot, it.weight, it.base, it.unique_version, ...it.arch, it.effect].join(' ');
+  return [it.name, it.description, it.element, it.type, ...(it.archetypes || [])].join(' ');
+}
+
+function subline(tab, it) {
+  if (tab === 'weapons') {
+    const bits = [it.weight || (it.kind === 'melee' ? 'Melee' : ''), it.kind === 'ranged' ? 'ranged' : 'melee'];
+    if (it.unique) bits.push('Unique ' + it.base);
+    return bits.filter(Boolean).join(' · ');
+  }
+  if (tab === 'armor') return [it.slot, it.weight, it.arch.join(' + ')].join(' · ');
+  return [it.type, it.element, (it.archetypes || []).join(' + ')].filter(Boolean).join(' · ') || 'Artifact';
+}
+
+function render() {
+  const tab = state.tab, T = TABS[tab];
+  document.querySelectorAll('.tab').forEach(b => {
+    const on = b.dataset.tab === tab;
+    b.setAttribute('aria-selected', on);
+    b.querySelector('.n').textContent = TABS[b.dataset.tab].items.length;
+  });
+  $('#filters').innerHTML = T.filters.map(([v, l]) =>
+    `<button class="chip${v === 'unique' ? ' uq' : ''}" data-f="${esc(v)}" aria-pressed="${state.filter[tab] === v}">${esc(l)}</button>`).join('');
+  $('#sort').innerHTML = T.sorts.map(([v, l]) => `<option value="${v}"${state.sort[tab] === v ? ' selected' : ''}>${l}</option>`).join('');
+
+  const q = state.q.trim().toLowerCase();
+  let items = T.items.filter(it => T.match(it, state.filter[tab]));
+  if (q) items = items.filter(it => searchText(tab, it).toLowerCase().includes(q));
+  items = sortItems(tab, items);
+  if (tab === 'weapons' && state.sort.weapons === 'reach') items = items.filter(w => w.kind === 'melee');
+
+  $('#count').textContent = items.length + ' shown';
+  if (!items.length) {
+    // look in the other tabs so a search never dead-ends
+    const elsewhere = Object.keys(TABS).filter(t => t !== tab && q && TABS[t].items.some(it => searchText(t, it).toLowerCase().includes(q)));
+    $('#list').innerHTML = `<li class="empty">Nothing here matches “${esc(state.q)}”.${elsewhere.length ? ` Try the ${elsewhere.map(t => `<button class="linkbtn" data-goto="${t}">${t}</button>`).join(' or ')} tab.` : ''}</li>`;
+    return;
+  }
+  $('#list').innerHTML = items.map(it => {
+    const [v, lab] = keyStat[tab](it);
+    const conf = (it.conflicts || []).length;
+    return `<li><button class="row${it.unique ? ' is-unique' : ''}" data-name="${esc(it.name)}">
+      <span class="nm">${esc(it.name)}${it.unique ? '<span class="flag uq">Unique</span>' : ''}${conf ? '<span class="flag conf">2 sources</span>' : ''}
+        <span class="sub">${esc(subline(tab, it))}</span></span>
+      ${v != null ? `<span class="stat">${fmt(v)}<small>${esc(lab)}</small></span>` : '<span></span>'}
+    </button></li>`;
+  }).join('');
+}
+
+/* ---------- detail sheet ---------- */
+function stat(k, v, unit = '', wide = false) {
+  return `<div class="st${wide ? ' wide' : ''}"><div class="k">${esc(k)}</div><div class="v">${v}${unit ? `<small>${esc(unit)}</small>` : ''}</div></div>`;
+}
+function conflictStat(k, c, unit = '') {
+  return `<div class="st conf"><div class="k">${esc(k)} · sources differ</div><div class="both">
+    <div>${fmt(c.mb, 2)}${unit}<span>MetaBot</span></div>
+    <div>${fmt(c.mod, 2)}${unit}<span>Stats Mod</span></div></div></div>`;
+}
+
+function weaponSheet(w) {
+  const cf = Object.fromEntries(w.conflicts.map(c => [c.field, c]));
+  const m = w.mb, md = w.mod || {};
+  let s = '';
+  if (w.kind === 'melee') {
+    s += cf.dps ? conflictStat('DPS', cf.dps) : stat(m.dps_est ? 'DPS (estimate)' : 'DPS', fmt(m.dps));
+    s += cf.combo ? conflictStat('Damage per combo', cf.combo) : stat('Damage per combo', fmt(m.combo));
+    if (md.hits) s += stat('Each hit', esc(md.hits), '', true);
+    s += md.combo_time != null ? stat(cf.dps ? 'Combo time (Stats Mod)' : 'Combo time', fmt(md.combo_time, 2), ' s') : '';
+    s += stat('Hits in combo', m.attacks);
+    s += cf.reach ? conflictStat('Reach', cf.reach, ' blocks') : stat('Reach', fmt(m.reach), ' blocks');
+    s += stat('Swing arc', esc(m.arc));
+    if (md.jump != null) s += stat('Jump attack', fmt(md.jump));
+  } else {
+    s += stat('Burst DPS', fmt(m.dps));
+    s += cf.shot ? conflictStat('Damage per shot', cf.shot) : stat('Damage per shot', fmt(m.shot));
+    if (md.arrows > 1) s += stat('Arrows per shot', `${md.arrows} × ${fmt(md.per_arrow)}`);
+    s += stat('Time between shots', fmt(m.rate, 2), ' s');
+    s += stat('Ammo', m.ammo);
+    if (md.reload != null) s += stat('Ammo cooldown', fmt(md.reload, 2), ' s');
+    s += stat('Range', fmt(m.range), ' blocks');
+    if (md.charge) s += stat('Charged shot', esc(md.charge), '', true);
+  }
+  let out = `<div class="stats">${s}</div>`;
+  if (w.conflicts.length) out += `<p class="note warn">The two sources read this weapon differently. MetaBot uses the newer game build (1.1.1.0). Try both against a training dummy or a mob you know and see which one holds up.</p>`;
+  if (!w.mod) out += `<p class="note">Only MetaBot lists this weapon, so hit-by-hit damage and combo time aren't available.</p>`;
+  if (w.unique && w.vs_base) {
+    if (!w.vs_base.length) out += `<h3>Compared to ${esc(w.base)}</h3><p class="note">Same base stats as a regular ${esc(w.base)}. The effect is the only difference.</p>`;
+    else out += `<h3>Compared to a regular ${esc(w.base)}</h3><ul class="diffs">${w.vs_base.map(diffRow).join('')}</ul>`;
+  }
+  if (w.unique) out += `<p class="note">Base item: <button class="linkbtn" data-open="${esc(w.base)}">${esc(w.base)}</button></p>`;
+  if (w.unique_version) out += `<p class="note">Unique version: <button class="linkbtn" data-open="${esc(w.unique_version)}">${esc(w.unique_version)}</button></p>`;
+  if (w.arch.length) out += `<p class="note">Archetypes (decide which effects it can roll): ${esc(w.arch.join(', '))}</p>`;
+  return out;
+}
+
+function diffRow(d) {
+  const lab = FIELD_LABEL[d.field] || d.field, u = UNITS[d.field] || '';
+  if (typeof d.unique === 'string') return `<li><span>${esc(lab)}</span><span class="val">${esc(d.unique)} <span class="note">vs ${esc(d.base)}</span></span></li>`;
+  const better = HIGHER_IS_BETTER[d.field] ? d.unique > d.base : d.unique < d.base;
+  return `<li><span>${esc(lab)}</span><span class="val ${better ? 'up' : 'down'}">${fmt(d.unique, 2)}${u} <span class="note">vs ${fmt(d.base, 2)}</span></span></li>`;
+}
+
+function armorSheet(a) {
+  let s = stat('Slot', esc(a.slot)) + stat('Weight', esc(a.weight)) + stat('Set', esc(a.set)) +
+    (a.best_area ? stat('Best place to farm', esc(a.best_area)) : '');
+  let out = `<div class="stats">${s}</div>`;
+  out += `<h3>Effect pools it rolls from</h3><div class="tags">${a.arch.map(x => `<span class="tag">${esc(x)} <b>${DATA.pools[x] ?? '?'}</b> effects</span>`).join('')}</div>`;
+  out += `<p class="note">No hidden defense or health number. What this piece does for you comes from its Item Power plus the effects it rolls.</p>`;
+  if (a.conflicts) out += `<p class="note warn">Sources list different archetypes: MetaBot ${esc(a.conflicts[0].mb)}, Stats Mod ${esc(a.conflicts[0].mod)}.</p>`;
+  if (a.unique) out += `<p class="note">Base item: <button class="linkbtn" data-open="${esc(a.base)}">${esc(a.base)}</button></p>`;
+  if (a.unique_version) out += `<p class="note">Unique version: <button class="linkbtn" data-open="${esc(a.unique_version)}">${esc(a.unique_version)}</button></p>`;
+  return out;
+}
+
+function artifactSheet(a) {
+  let s = stat('Cooldown', fmt(a.cooldown_s), ' s') +
+    stat('Soul cost', a.soul_cost ?? (['Corrupted Beacon', 'Lightning Rod', 'Winter Staff'].includes(a.name) ? '0' : '—')) +
+    (a.activation ? stat('Activation', esc(a.activation)) : '') +
+    (a.element ? stat('Element', esc(a.element)) : '');
+  let out = `<p>${esc(a.description)}</p><div class="stats">${s}</div>`;
+  if (a.details && a.details.length) out += `<h3>Hidden numbers</h3><ul class="details">${a.details.map(d => `<li>${esc(d)}</li>`).join('')}</ul>`;
+  else out += `<p class="note">The game files don't expose damage, radius or duration for this one yet.</p>`;
+  if (a.applies_status && a.applies_status.length) out += `<h3>Applies</h3><ul class="details">${[].concat(a.applies_status).map(d => `<li>${esc(typeof d === 'string' ? d : JSON.stringify(d))}</li>`).join('')}</ul>`;
+  if (a.archetypes && a.archetypes.length) out += `<p class="note">Archetypes: ${esc(a.archetypes.join(', '))}</p>`;
+  if (a.where_found) out += `<p class="note">Where it drops: ${esc(a.where_found)}</p>`;
+  return out;
+}
+
+function findItem(name) {
+  for (const t of Object.keys(TABS)) { const it = TABS[t].items.find(i => i.name === name); if (it) return [t, it]; }
+  return [null, null];
+}
+
+let lastFocus = null;
+function openSheet(name) {
+  const [tab, it] = findItem(name);
+  if (!it) return;
+  const kind = tab === 'weapons' ? subline(tab, it) : tab === 'armor' ? `${it.slot} · ${it.set} set` : (it.type || 'Artifact');
+  const body = tab === 'weapons' ? weaponSheet(it) : tab === 'armor' ? armorSheet(it) : artifactSheet(it);
+  const sh = $('#sheet');
+  sh.className = 'sheet' + (it.unique ? ' unique' : '');
+  sh.innerHTML = `<div class="sheet-in"><div class="grab"></div>
+    <div class="sheet-head"><div style="flex:1;min-width:0"><h2 id="sheet-title">${esc(it.name)}</h2><div class="kind">${esc(kind)}</div></div>
+    <button class="close" id="close" aria-label="Close">×</button></div>
+    ${it.effect ? `<div class="effect"><b>Unique effect</b>${esc(it.effect)}</div>` : ''}
+    ${body}</div>`;
+  if (!lastFocus) lastFocus = document.activeElement;
+  sh.hidden = false; $('#scrim').hidden = false; sh.scrollTop = 0;
+  $('#close').focus();
+}
+function closeSheet() {
+  $('#sheet').hidden = true; $('#scrim').hidden = true;
+  if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+}
+
+/* ---------- events ---------- */
+document.querySelector('.tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  state.tab = b.dataset.tab; store.set('tab', state.tab); render();
+});
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const f = b.dataset.f; state.filter[state.tab] = state.filter[state.tab] === f ? 'all' : f; render();
+});
+$('#sort').addEventListener('change', e => { state.sort[state.tab] = e.target.value; store.set('sort', state.sort); render(); });
+$('#q').addEventListener('input', e => { state.q = e.target.value; $('#clear').hidden = !state.q; render(); });
+$('#clear').addEventListener('click', () => { $('#q').value = ''; state.q = ''; $('#clear').hidden = true; render(); $('#q').focus(); });
+$('#list').addEventListener('click', e => {
+  const g = e.target.closest('[data-goto]'); if (g) { state.tab = g.dataset.goto; render(); return; }
+  const r = e.target.closest('.row'); if (r) openSheet(r.dataset.name);
+});
+$('#sheet').addEventListener('click', e => {
+  if (e.target.closest('#close')) return closeSheet();
+  const o = e.target.closest('[data-open]'); if (o) openSheet(o.dataset.open);
+});
+$('#scrim').addEventListener('click', closeSheet);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet(); });
+
+if (!TABS[state.tab]) state.tab = 'weapons';
+render();
+</script>

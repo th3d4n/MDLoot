@@ -1,0 +1,841 @@
+{
+  "artifacts": [
+    {
+      "name": "Battle Banner",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/battle-banner",
+      "description": "Raise the banner of war and grant strength to you and all nearby allies.",
+      "cooldown_s": 10,
+      "soul_cost": 45,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter",
+        "Support",
+        "Summoner"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 6 blocks",
+        "Area lasts: 10 s"
+      ],
+      "where_found": "Singer's Meadow (rec. lvl 33, 4.2% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops)"
+    },
+    {
+      "name": "Blaze Bangle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/blaze-bangle",
+      "description": "Imbues your attacks with the power of a blazing inferno and looks radiant on your wrist!",
+      "cooldown_s": 6,
+      "soul_cost": 35,
+      "activation": "Instant",
+      "type": null,
+      "element": "Fire",
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Blaze Bangle: Melee attacks deal additional Fire damage."
+      ],
+      "details": [
+        "Melee hits add: +2 Fire damage and Burned"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Ravines (rec. lvl —, 4% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Blight Bangle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/blight-bangle",
+      "description": "Imbues your attacks with poisonous power and looks stunning on your wrist!",
+      "cooldown_s": 6,
+      "soul_cost": 35,
+      "activation": "Instant",
+      "type": null,
+      "element": "Poison",
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Blight Bangle: Melee attacks deal additional Poison damage."
+      ],
+      "details": [
+        "Melee hits add: +2 Poison damage and Poisoned"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Frozen Highlands (rec. lvl 26, 3.6% of item drops)"
+    },
+    {
+      "name": "Blizzard Bangle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/blizzard-bangle",
+      "description": "Imbues your attacks with the power of freezing blizzards and looks really cool on your wrist!",
+      "cooldown_s": 6,
+      "soul_cost": 35,
+      "activation": "Instant",
+      "type": null,
+      "element": "Frost",
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Blizzard Bangle: Melee attacks deal additional Frost damage."
+      ],
+      "details": [
+        "Melee hits add: +2 Frost damage and Frozen"
+      ],
+      "where_found": "Singer's Meadow (rec. lvl 33, 4.2% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops)"
+    },
+    {
+      "name": "Cinder Scepter",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/cinder-scepter",
+      "description": "Hold the scepter to charge it up with souls, then release soul-powered fire on your enemies.",
+      "cooldown_s": 5,
+      "soul_cost": 25,
+      "activation": "Charged",
+      "type": "Offensive",
+      "element": "Fire",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius (charge levels 1–3): 2.5 blocks, 4.2 blocks, 6.2 blocks",
+        "Level 1: Radius 2.5 blocks, Area lasts 8 s",
+        "Level 2: Radius 4.2 blocks, Area lasts 12 s",
+        "Level 3: Radius 6.2 blocks, Area lasts 14 s"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Conductive Quiver",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/conductive-quiver",
+      "description": "These arrows will strike your enemies like lightning from the skies.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": null,
+      "type": "Quiver",
+      "element": "Lightning",
+      "archetypes": [],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops)"
+    },
+    {
+      "name": "Corrupted Beacon",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/corrupted-beacon",
+      "description": "Turns souls into raw power as you fire it in short bursts or in one long, soul-draining blast of ultimate power.",
+      "cooldown_s": 7,
+      "soul_cost": null,
+      "activation": "Channeled",
+      "type": "Offensive",
+      "element": "Soul",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops)"
+    },
+    {
+      "name": "Corrupted Seeds",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/corrupted-seeds",
+      "description": "Instantly sprout into deadly vines, poisoning and binding your enemies while you reap what you’ve sown.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": "Poison",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Poisoned: Poison damage is being taken over time.",
+        "Vined: Movement is completely disabled."
+      ],
+      "details": [
+        "Damage per hit: 2",
+        "Radius: 5 blocks"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); The Deep Dark (rec. lvl 14, 3.6% of item drops); Quest reward: Illegal Illager Trials"
+    },
+    {
+      "name": "Creeper Candle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/creeper-candle",
+      "description": "Just a completely normal candle, apart from that ominous hss coming from the burning wick... Wait, that’s a fuse!",
+      "cooldown_s": 5,
+      "soul_cost": 25,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": null,
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops); Quest reward: The Redstone Monstrosity Revived; Quest reward: The Creeper Candle Conspiracy"
+    },
+    {
+      "name": "Death Cap Mushroom",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/death-cap-mushroom",
+      "description": "Eaten by daring warriors before battle to enter a berserker state, increasing both movement and attack speed.",
+      "cooldown_s": 4,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Deathcap Mushroom: Movement speed and melee attack speed are increased."
+      ],
+      "details": [],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Echo Ocarina",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/echo-ocarina",
+      "description": "The music of this hollowed husk protects against ranged attacks.",
+      "cooldown_s": 10,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Tank"
+      ],
+      "applies_status": [
+        "Deflection: All projectiles are being deflected."
+      ],
+      "details": [
+        "Status duration: 8 s"
+      ],
+      "where_found": "Frozen Highlands (rec. lvl 26, 3.6% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops); Quest reward: Wrath of the Sculkers; Quest reward: The Sculk Monstrosity Revived"
+    },
+    {
+      "name": "Electric Bangle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/electric-bangle",
+      "description": "Imbues your attacks with the power of crackling electricity and looks striking on your wrist!",
+      "cooldown_s": 6,
+      "soul_cost": 35,
+      "activation": "Instant",
+      "type": null,
+      "element": "Lightning",
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Electric Bangle: Melee attacks deal additional Lightning damage."
+      ],
+      "details": [
+        "Melee hits add: +2 Lightning damage and Zapped"
+      ],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops)"
+    },
+    {
+      "name": "Ender Fog",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/ender-fog",
+      "description": "The Ender Fog smoke bomb lets you sneak up on enemies, cloaked by shadows.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Trickster"
+      ],
+      "applies_status": [
+        "Shadowcloaking: Invisible to mobs and the next attack is a critical hit, ending on the next attack or artifact use."
+      ],
+      "details": [
+        "Status duration: 1 s"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Fighter's Flute",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/fighters-flute",
+      "description": "The music of the flute grants critical striking powers to any fighter of note.",
+      "cooldown_s": 5,
+      "soul_cost": 45,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter",
+        "Trickster",
+        "Summoner"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 5 blocks"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Frozen Highlands (rec. lvl 26, 3.6% of item drops); Quest reward: The Sculk Monstrosity Revived"
+    },
+    {
+      "name": "Fighting Fungus",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/fighting-fungus",
+      "description": "Eaten by daring warriors before battle, unleashing their rage and increasing their attack speed.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Flurrying: Melee and ranged attack speed is increased."
+      ],
+      "details": [
+        "Status duration: 4 s"
+      ],
+      "where_found": "Frozen Highlands (rec. lvl 26, 3.6% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops)"
+    },
+    {
+      "name": "Firework Arrow",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/firework-arrow",
+      "description": "The explosive power of the TNT combined with the high velocity movement of an arrow, what could possibly go wrong?",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": null,
+      "type": "Quiver",
+      "element": null,
+      "archetypes": [],
+      "applies_status": null,
+      "details": [
+        "Radius: 5 blocks"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Flaming Quiver",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/flaming-quiver",
+      "description": "Light your arrows with the flame of your righteous rage.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": null,
+      "type": "Quiver",
+      "element": "Fire",
+      "archetypes": [],
+      "applies_status": null,
+      "details": [],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Freezing Quiver",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/freezing-quiver",
+      "description": "These arrows will have your enemies quivering from both fear and cold.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": null,
+      "type": "Quiver",
+      "element": "Frost",
+      "archetypes": [],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Frozen Highlands (rec. lvl 26, 3.6% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops)"
+    },
+    {
+      "name": "Grindstone",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/grindstone",
+      "description": "Sharpen your weapons on the grindstone to make enemies feel the sting of your steel and cause extra damage.",
+      "cooldown_s": 4,
+      "soul_cost": 30,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Grindstone: All attacks deal increased additive damage."
+      ],
+      "details": [
+        "Status duration: 6 s"
+      ],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops)"
+    },
+    {
+      "name": "Honey Dipper",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/honey-dipper",
+      "description": "A sticky treat to trap your enemies as your buzzing friends join the battle! Victory never tasted so sweet.",
+      "cooldown_s": 15,
+      "soul_cost": 45,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": null,
+      "archetypes": [
+        "Mage",
+        "Summoner"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 6 blocks",
+        "Range: 10 blocks",
+        "Area lasts: 8 s"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops); Quest reward: The Illagers from the Rift"
+    },
+    {
+      "name": "Humbling Horn",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/humbling-horn",
+      "description": "The music from this mystical horn will knock enemies over and leave their ears ringing. You may need some practice.",
+      "cooldown_s": 4,
+      "soul_cost": 25,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Tank",
+        "Support",
+        "Summoner"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 7.5 blocks"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Frozen Highlands (rec. lvl 26, 3.6% of item drops); Quest reward: The Sculk Monstrosity Revived"
+    },
+    {
+      "name": "Lightning Rod",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/lightning-rod",
+      "description": "Channels soul-powered lightning, zapping your enemies silly for as long as you hold it.",
+      "cooldown_s": 6,
+      "soul_cost": null,
+      "activation": "Channeled",
+      "type": "Offensive",
+      "element": "Lightning",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Frozen Highlands (rec. lvl 26, 3.6% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops)"
+    },
+    {
+      "name": "Picnic Basket",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/picnic-basket",
+      "description": "Great day for a picnic! Share healthy treats with your friends. Hangry friends make for bad allies in battle.",
+      "cooldown_s": 15,
+      "soul_cost": 15,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Support"
+      ],
+      "applies_status": null,
+      "details": [
+        "Area lasts: 8 s"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Pouch of Ember",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/pouch-of-ember",
+      "description": "Throw it on the ground to spread a fierce fire around yourself. You’ll be too hot to handle!",
+      "cooldown_s": 5,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": "Fire",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Burned: Fire damage is being taken over time."
+      ],
+      "details": [
+        "Damage per hit: 20",
+        "Radius: 3.2 blocks"
+      ],
+      "where_found": "Singer's Meadow (rec. lvl 33, 4.2% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Pouch of Frost",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/pouch-of-frost",
+      "description": "Throw it on the ground to spread a blistering blizzard around yourself. One of the coolest artifacts there is!",
+      "cooldown_s": 5,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": "Frost",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Frozen: Attack speed and movement speed are reduced."
+      ],
+      "details": [
+        "Damage per hit: 20",
+        "Radius: 3.2 blocks"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops)"
+    },
+    {
+      "name": "Pouch of Poison",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/pouch-of-poison",
+      "description": "Throw it on the ground to spread toxic terror around yourself. Don’t worry, this mob repellent is completely eco-friendly.",
+      "cooldown_s": 5,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": "Poison",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Poisoned: Poison damage is being taken over time."
+      ],
+      "details": [
+        "Damage per hit: 20",
+        "Radius: 3.2 blocks"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Pouch of Thunder",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/pouch-of-thunder",
+      "description": "Throw it on the ground to spread conductive chaos around yourself. It’s a real power trip!",
+      "cooldown_s": 5,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": "Lightning",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Zapped: Movement speed is increased at the cost of greatly reduced damage resistance."
+      ],
+      "details": [
+        "Damage per hit: 20",
+        "Radius: 3.2 blocks"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); The Deep Dark (rec. lvl 14, 3.6% of item drops)"
+    },
+    {
+      "name": "Powershaker",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/powershaker",
+      "description": "Let’s shake things up! The Powershaker is a smashing good time and will blow your enemies’ minds!",
+      "cooldown_s": 16,
+      "soul_cost": 35,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter"
+      ],
+      "applies_status": [
+        "Powershaker: Melee attacks cause tiny explosions on hit."
+      ],
+      "details": [],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops); Humbler Huskland (rec. lvl 36, 2.6% of item drops)"
+    },
+    {
+      "name": "Redstone Mine Launcher",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/redstone-mine-launcher",
+      "description": "This state-of-the-craft mine launcher will fire a volley of explosive Redstone mines.",
+      "cooldown_s": 5,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": null,
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [
+        "Damage per hit: 5 × 9 projectiles",
+        "Range: 20 blocks"
+      ],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops); Cinder Crags (rec. lvl —, 14.3% of item drops); Quest reward: The Redstone Monstrosity Revived"
+    },
+    {
+      "name": "Soul Harvester",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/soul-harvester",
+      "description": "Charge it up with the souls you have collected before releasing them into a cluster hex of power.",
+      "cooldown_s": 5,
+      "soul_cost": 15,
+      "activation": "Charged",
+      "type": null,
+      "element": "Soul",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius (charge levels 1–3): 4.4 blocks, 7 blocks, 9.5 blocks",
+        "Level 1: Radius 4.4 blocks",
+        "Level 2: Radius 7 blocks",
+        "Level 3: Radius 9.5 blocks"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops); Quest reward: The Sculk Monstrosity Revived; Quest reward: The Final Souldown Encore"
+    },
+    {
+      "name": "Tempo Truffle",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/tempo-truffle",
+      "description": "Eaten by daring warriors before battle, sending them charging into battle with increased movement speed.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Trickster"
+      ],
+      "applies_status": [
+        "Hurrying: Movement speed is increased."
+      ],
+      "details": [
+        "Status duration: 8 s"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops)"
+    },
+    {
+      "name": "Totem of Casting",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/totem-of-casting",
+      "description": "Place the totem on the ground to spread artificing energy to your allies, reducing their artifact cooldown time.",
+      "cooldown_s": 15,
+      "soul_cost": 30,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Mage",
+        "Support"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 9 blocks",
+        "Area lasts: 10 s"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Singer's Meadow (rec. lvl 33, 4.2% of item drops)"
+    },
+    {
+      "name": "Totem of Regeneration",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/totem-of-regeneration",
+      "description": "This wooden figurine radiates a warmth like that of a crackling campfire and heals all friends who gather around it.",
+      "cooldown_s": 27,
+      "soul_cost": 65,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Support",
+        "Summoner"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 6 blocks",
+        "Area lasts: 7 s"
+      ],
+      "where_found": "Rainy Plains (rec. lvl 21, 3.5% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Totem of Shielding",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/totem-of-shielding",
+      "description": "This solid gold totem radiates a protective barrier, shielding all inside it from projectiles.",
+      "cooldown_s": 15,
+      "soul_cost": 30,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Support",
+        "Tank"
+      ],
+      "applies_status": null,
+      "details": [
+        "Totem lasts: 10 s",
+        "Totem health: 125"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); The Deep Dark (rec. lvl 14, 3.6% of item drops)"
+    },
+    {
+      "name": "Turtle Master's Mandolin",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/turtle-masters-mandolin",
+      "description": "A beautiful instrument varnished with Potion of the Turtle Master, granting resistance to all friends who catch your groove.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Tank"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 7 blocks"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); The Deep Dark (rec. lvl 14, 3.6% of item drops); Quest reward: The Sculk Monstrosity Revived"
+    },
+    {
+      "name": "Venomous Quiver",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/venomous-quiver",
+      "description": "A quiver soaked in venom for that extra sting when your arrows bite.",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": null,
+      "type": "Quiver",
+      "element": "Poison",
+      "archetypes": [],
+      "applies_status": null,
+      "details": [],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Warding Chimes",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/warding-chimes",
+      "description": "Chimes crafted from humbler husk. Their music turns your skin as thick as carapace.",
+      "cooldown_s": 15,
+      "soul_cost": 40,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Tank"
+      ],
+      "applies_status": [
+        "Invulnerable: No damage is being taken."
+      ],
+      "details": [
+        "Status duration: 5 s"
+      ],
+      "where_found": "Brave Haven (rec. lvl 1, 5% of item drops); Honeycomb Fields (rec. lvl 2, 4.8% of item drops); Frozen Highlands (rec. lvl 26, 3.6% of item drops)"
+    },
+    {
+      "name": "Warrior Drums",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/warrior-drums",
+      "description": "Let the sound of drums fill your warrior heart with the power to do double damage on all critical hits.",
+      "cooldown_s": 5,
+      "soul_cost": 45,
+      "activation": "Instant",
+      "type": null,
+      "element": null,
+      "archetypes": [
+        "Fighter",
+        "Trickster"
+      ],
+      "applies_status": null,
+      "details": [
+        "Radius: 5 blocks"
+      ],
+      "where_found": "The Deep Dark (rec. lvl 14, 3.6% of item drops); Lullaby Hills (rec. lvl 42, 4.2% of item drops); Quest reward: The Sculk Monstrosity Revived"
+    },
+    {
+      "name": "Winter Staff",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/winter-staff",
+      "description": "Blasts a soul-powered blizzard at your enemies and creates a cozy winter wonderland.",
+      "cooldown_s": 5,
+      "soul_cost": null,
+      "activation": "Channeled",
+      "type": "Offensive",
+      "element": "Frost",
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": null,
+      "details": [
+        "Damage per hit: 15 × 5 projectiles",
+        "Range: 3 blocks"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    },
+    {
+      "name": "Witch Brew",
+      "url": "https://metabot.gg/en/minecraft-dungeons-2/artifacts/witch-brew",
+      "description": "A witch's secret formula to throw at your enemies and spread a cloud of weakening vapor. What do they put in this stuff?",
+      "cooldown_s": 5,
+      "soul_cost": 20,
+      "activation": "Instant",
+      "type": "Offensive",
+      "element": null,
+      "archetypes": [
+        "Mage"
+      ],
+      "applies_status": [
+        "Weakened: Damage dealt is reduced and damage taken is increased."
+      ],
+      "details": [
+        "Damage per hit: 10",
+        "Radius: 3 blocks",
+        "Range: 10 blocks",
+        "Area lasts: 6 s"
+      ],
+      "where_found": "Howling Woods (rec. lvl 6, 3.3% of item drops); Ravines (rec. lvl —, 4% of item drops)"
+    }
+  ],
+  "armor_extra": [
+    {
+      "name": "Soul Corruptor Mask",
+      "slot": "Helmet",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Soul Corruptor Duster",
+      "slot": "Chest",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Soul Corruptor Sash",
+      "slot": "Leggings",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Soul Corruptor Sandals",
+      "slot": "Boots",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Twisted Warden Blindfold",
+      "slot": "Helmet",
+      "weight": "Medium"
+    },
+    {
+      "name": "Twisted Warden Vest",
+      "slot": "Chest",
+      "weight": "Medium"
+    },
+    {
+      "name": "Twisted Warden Tights",
+      "slot": "Leggings",
+      "weight": "Medium"
+    },
+    {
+      "name": "Twisted Warden Sneakers",
+      "slot": "Boots",
+      "weight": "Medium"
+    },
+    {
+      "name": "Woodsprite Crown",
+      "slot": "Helmet",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Woodsprite Barkpiece",
+      "slot": "Chest",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Woodsprite Trunks",
+      "slot": "Leggings",
+      "weight": "Heavy"
+    },
+    {
+      "name": "Woodsprite Root Boots",
+      "slot": "Boots",
+      "weight": "Heavy"
+    }
+  ],
+  "notes": [
+    "Conductive Quiver: Activation shown as '—' on page; recorded null",
+    "Corrupted Beacon: page shows no Soul cost field (artifacts index lists 0); recorded null",
+    "Firework Arrow: Activation shown as '—' on page; recorded null",
+    "Flaming Quiver: Activation shown as '—' on page; recorded null",
+    "Freezing Quiver: Activation shown as '—' on page; recorded null",
+    "Lightning Rod: page shows no Soul cost field (artifacts index lists 0); recorded null",
+    "Venomous Quiver: Activation shown as '—' on page; recorded null",
+    "Winter Staff: page shows no Soul cost field (artifacts index lists 0); recorded null",
+    "All 40 artifact pages and 12 armor pages returned HTTP 200 at the guessed slugs; data from game build 1.1.1.0 per page footer.",
+    "Archetype vs type split uses the artifacts index filters: Type = Offensive/Quiver, Archetype = Fighter/Mage/Summoner/Support/Tank/Trickster. 'type' is null when the page's stat table shows no Type row.",
+    "No artifact page shows heal % or buff % values; status-effect rows are text descriptions only (in applies_status)."
+  ]
+}
