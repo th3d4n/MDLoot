@@ -33,5 +33,5 @@ img {{ max-width: 100%; }}
 </body>
 </html>
 """
-open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(page)
-print('index.html', len(page) // 1024, 'KB')
+open(os.path.join(ROOT, 'public', 'index.html'), 'w', encoding='utf-8').write(page)
+print('public/index.html', len(page) // 1024, 'KB')

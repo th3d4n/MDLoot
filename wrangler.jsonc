@@ -1,0 +1,11 @@
+{
+  // Static site: Cloudflare serves everything in ./public. No Worker script.
+  "name": "mdloot",
+  "compatibility_date": "2026-10-22",
+  "assets": {
+    "directory": "./public"
+  },
+  "routes": [
+    { "pattern": "md2loot.th3dan.com", "custom_domain": true }
+  ]
+}

@@ -4,7 +4,7 @@ A phone-friendly lookup for the hidden item stats in **Minecraft Dungeons II**: 
 
 Live at **https://md2loot.th3dan.com**
 
-The whole site is one static file, `index.html`, with the data embedded. No build step is needed to host it.
+The whole site is one static file, `public/index.html`, with the data embedded. Cloudflare Workers serves the `public/` folder (see `wrangler.jsonc`), and the custom domain is set there too.
 
 ## Where the numbers come from
 
@@ -18,17 +18,17 @@ These are base stats. In game, Item Power, enchantments, and gear effects change
 ## Updating after a game patch
 
 ```bash
-bash tools/update.sh      # fetch sources, rebuild data/data.json and index.html
+bash tools/update.sh      # fetch sources, rebuild data/data.json and public/index.html
 git diff --stat data/     # see what changed
 ```
 
-Then commit and push. Cloudflare Pages redeploys on push.
+Then commit and push. Cloudflare redeploys on every push to `main`.
 
 | File | What it does |
 |---|---|
 | `tools/fetch_sources.sh` | Downloads source pages into `sources/` (not committed) |
 | `tools/build_artifacts.py` | Pulls artifact stats out of the downloaded artifact pages |
 | `tools/build_data.py` | Merges both sources, flags conflicts, writes `data/data.json` |
-| `tools/build_site.py` | Builds `index.html` from `src/app.template.html` and the data |
+| `tools/build_site.py` | Builds `public/index.html` from `src/app.template.html` and the data |
 
 Fan project. Not affiliated with Mojang or Microsoft.
